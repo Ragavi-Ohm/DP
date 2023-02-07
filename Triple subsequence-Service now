@@ -1,0 +1,37 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+#include<bits/stdc++.h>
+using namespace std;
+int func(vector<int>&nums,vector<vector<int>>&dp,int ind,int prev)
+{
+        int n=nums.size();
+        if(ind==n)
+        return 0;
+        if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
+        int take=0+func(nums,dp,ind+1,prev);
+        if(prev==-1||nums[ind]==3*nums[prev])
+        take=max(take,1+func(nums,dp,ind+1,ind));
+        
+        dp[ind][prev+1]=take;
+        return dp[ind][prev+1];
+}
+int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n,vector<int>(n+1,-1));
+        return func(nums,dp,0,-1);
+        
+}
+int main()
+{
+    cout<<"Hello World";
+    vector<int>a;
+    a.push_back(1);
+    a.push_back(2);
+    a.push_back(3);
+    //a.push_back(18);
+    int res=lengthOfLIS(a);
+    //System.out.println(res);
+    cout<<res;
+    return 0;
+}
