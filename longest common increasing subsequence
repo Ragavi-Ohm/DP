@@ -1,0 +1,20 @@
+int func(int ind1,int ind2,int prev,int arr1[],int arr2[],vector<vector<vector<int>>>&dp)
+    {
+        if(ind1<0||ind2<0)
+        return 0;
+        if(dp[ind1][ind2][prev+1]!=-1)
+        return dp[ind1][ind2][prev+1];
+        
+        int p=0;
+        if((arr1[ind1]==arr2[ind2])&&(prev==-1||arr1[ind1]<arr1[prev]))
+        {
+            p=1+func(ind1-1,ind2-1,ind1,arr1,arr2,dp);
+        }
+        int np=max(func(ind1-1,ind2,prev,arr1,arr2,dp),func(ind1,ind2-1,prev,arr1,arr2,dp));
+        return dp[ind1][ind2][prev+1]=max(p,np);
+    }
+    int LCIS(int arr1[], int m, int arr2[], int n) {
+        // code here
+        vector<vector<vector<int>>>dp(m,vector<vector<int>>(n,vector<int>(m+1,-1)));
+        return func(m-1,n-1,-1,arr1,arr2,dp);
+    }
